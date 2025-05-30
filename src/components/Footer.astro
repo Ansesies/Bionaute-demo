@@ -2,7 +2,7 @@
 // Footer Component para Bionaute
 ---
 
-<footer id="footer" class="relative bg-gradient-to-br from-gray-900 to-emerald-950 text-white overflow-hidden">
+<footer id="footer" class="relative bg-gradient-to-br from-gray-900 to-emerald-950 text-white overflow-hidden z-10 min-h-[300px]">
   <!-- Overlay de degradado superior para transición suave -->
   <div class="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-gray-50/10 to-transparent"></div>
   
@@ -137,7 +137,7 @@
     background-size: 20px 20px;
   }
   
-  /* Animaciones al scroll */
+  /* Animaciones para el footer - Versión simplificada */
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -158,63 +158,94 @@
     }
   }
   
-  /* Aplicamos las animaciones - Estas se activarán con JavaScript */
-  .footer-content .footer-item {
-    opacity: 0;
-    transform: translateY(20px);
+  /* Configuración base del footer */
+  footer#footer {
+    display: block;
+    visibility: visible;
+    opacity: 1;
   }
-  
-  .footer-item.animated,
-  .footer-divider.animated,
-  .footer-bottom.animated {
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
-  
-  .footer-divider {
-    opacity: 0;
-  }
-  
+
+  /* Estado inicial de los elementos del footer */
+  .footer-content .footer-item,
+  .footer-divider,
   .footer-bottom {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    visibility: visible;
+  }
+
+  /* Estado animado - cuando se activa con scroll */
+  .footer-content .footer-item.animated,
+  .footer-divider.animated,
+  .footer-bottom.animated {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mantener el contenido del footer visible */
+  .footer-item *,
+  .footer-bottom * {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Añadimos un efecto especial para elementos con la clase footer-animated */
+  .footer-item.footer-animated::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(134, 239, 172, 0.3), transparent);
+    opacity: 0;
+    animation: fadeInGlow 1.5s forwards 0.5s;
+  }
+  
+  @keyframes fadeInGlow {
+    0% { opacity: 0; width: 0; }
+    50% { opacity: 1; width: 30%; }
+    100% { opacity: 0; width: 80%; }
+  }
+  
+  /* Configuración base del footer (sin forzar visibilidad) */
+  footer#footer {
+    min-height: 300px;
+    position: relative;
+    z-index: 10;
   }
 </style>
 
 <script>
-  // Observador de intersección para animaciones al scroll
-  document.addEventListener('DOMContentLoaded', () => {
-    const footerElements = document.querySelectorAll('.footer-item, .footer-divider, .footer-bottom');
+  function initFooterAnimations() {
+    const footer = document.getElementById('footer');
+    if (!footer) return;
+
+    const items = footer.querySelectorAll('.footer-item, .footer-divider, .footer-bottom');
     
-    // Crear un observador si IntersectionObserver está disponible en el navegador
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          // Cuando un elemento entra en el viewport, añadir la clase para animar
-          if (entry.isIntersecting) {
-            // Agregar un pequeño retraso para animar secuencialmente
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Agregar delays escalonados para animación secuencial
+          items.forEach((item, index) => {
             setTimeout(() => {
-              entry.target.classList.add('animated');
-            }, 100 * Array.from(footerElements).indexOf(entry.target));
-            
-            // Dejar de observar el elemento después de animarlo
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        root: null, // Viewport
-        threshold: 0.1, // Ejecutar cuando al menos el 10% del elemento es visible
-        rootMargin: '0px 0px -50px 0px' // Activar un poco antes
+              item.classList.add('animated');
+            }, index * 100); // 100ms delay entre elementos
+          });
+          observer.unobserve(entry.target);
+        }
       });
-      
-      // Observar cada elemento del footer
-      footerElements.forEach(element => {
-        observer.observe(element);
-      });
-    } else {
-      // Fallback para navegadores que no soportan IntersectionObserver
-      footerElements.forEach(element => {
-        element.classList.add('animated');
-      });
-    }
-  });
+    }, {
+      threshold: 0.2,  // Trigger cuando 20% del footer es visible
+      rootMargin: '50px' // Margen adicional para trigger anticipado
+    });
+
+    observer.observe(footer);
+  }
+
+  // Inicializar en carga de página y transiciones de Astro
+  document.addEventListener('DOMContentLoaded', initFooterAnimations);
+  document.addEventListener('astro:page-load', initFooterAnimations);
 </script>

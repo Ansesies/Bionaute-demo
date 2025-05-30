@@ -1,6 +1,5 @@
 ---
-// Importamos el script para las funcionalidades del header
-import HeaderScript from '../scripts/HeaderScript.astro';
+// No necesitamos importar HeaderScript, ya que no podemos usarlo con client:load
 ---
 
 <header class="fixed w-full z-50 transition-all duration-300" id="header">
@@ -82,5 +81,75 @@ import HeaderScript from '../scripts/HeaderScript.astro';
   }
 </style>
 
-<!-- Importamos el script del header con la directiva client:load para garantizar funcionalidad correcta -->
-<HeaderScript client:load />
+<!-- Script para la funcionalidad del header -->
+<script>
+  // Script enfocado únicamente en la funcionalidad del header
+  
+  // Función para inicializar el header
+  function initializeHeader() {
+    console.log('Header: Inicializando');
+    
+    // Configurar el menú móvil
+    setupMobileMenu();
+    
+    // Configurar comportamiento de scroll
+    setupScrollBehavior();
+  }
+  
+  // Configurar el menú móvil
+  function setupMobileMenu() {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener('click', () => {
+        // Toggle para mostrar/ocultar menú
+        if (mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenu.classList.remove('scale-y-0', 'opacity-0');
+        } else {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.add('scale-y-0', 'opacity-0');
+        }
+      });
+    }
+  }
+  
+  // Configurar comportamiento de scroll (header transparente a sólido)
+  function setupScrollBehavior() {
+    const header = document.getElementById('header') as HTMLElement | null;
+    if (!header) return;
+    
+    // Función para actualizar apariencia según scroll
+    function updateHeaderOnScroll() {
+      // Verificar que header siga existiendo en cada llamada
+      const headerElement = document.getElementById('header');
+      if (!headerElement) return;
+      
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      
+      if (scrollY > 50) {
+        headerElement.classList.add('scrolled');
+        (headerElement as HTMLElement).style.background = 'linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.8) 100%)';
+      } else {
+        headerElement.classList.remove('scrolled');
+        (headerElement as HTMLElement).style.background = 'linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.6) 100%)';
+      }
+    }
+    
+    // Verificar inicialmente
+    updateHeaderOnScroll();
+    
+    // Escuchar eventos de scroll
+    window.addEventListener('scroll', updateHeaderOnScroll);
+  }
+  
+  // Inicializar cuando el DOM está listo
+  initializeHeader();
+  
+  // Re-inicializar en eventos de Astro
+  document.addEventListener('astro:page-load', initializeHeader);
+  
+  // También verificar cuando la página está completamente cargada
+  window.addEventListener('load', initializeHeader);
+</script>

@@ -2,18 +2,48 @@
 import "../styles/global.css";
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { ClientRouter } from "astro:transitions";
 ---
 
 
 <!doctype html>
 <html lang="en">
 	<head>
+		<!-- Script que se ejecuta inmediatamente para marcar que JS está habilitado -->
+		<script is:inline>
+			// Marcar que JS está habilitado - esto permite que las CSS apliquen animaciones condicionales
+			document.documentElement.classList.add('js-enabled');
+		</script>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Bionaute - Biotecnología Avanzada</title>
-		<script src="/js/header.js" defer></script>
+		<!-- Animación específica para Astro View Transitions -->
+		<style is:inline>
+			/* Optimización específica para transiciones de Astro */
+			:root {
+				--footer-transition-duration: 1s;
+				--footer-transition-timing: cubic-bezier(0.215, 0.61, 0.355, 1);
+			}
+
+			html[data-astro-transition] footer#footer {
+				opacity: 1 !important;
+				visibility: visible !important;
+			}
+			
+			/* Solucionador para el parpadeo durante transiciones */
+			html[data-astro-transition-fallback] footer#footer .footer-item,
+			html[data-astro-transition-fallback] footer#footer .footer-divider,
+			html[data-astro-transition-fallback] footer#footer .footer-bottom {
+				opacity: 1 !important;
+				transform: translateY(0) !important;
+			}
+		</style>
+		<script is:inline src="/ts/header.ts" defer></script>
+		<script is:inline src="/ts/values-animation.ts" defer></script>
+		
+		<ClientRouter />
 	</head>
 	<body>
 		<Header />
@@ -21,6 +51,12 @@ import Footer from '../components/Footer.astro';
 			<slot />
 		</main>
 		<Footer />
+		
+		<!-- Incluir HeaderScript de forma correcta -->
+		<script>
+			// Solo marcar que JS está habilitado
+			document.documentElement.classList.add('js-enabled');
+		</script>
 	</body>
 </html>
 
@@ -38,5 +74,15 @@ import Footer from '../components/Footer.astro';
 		display: block;
 		padding: 0;
 		margin: 0;
+	}
+	
+	/* Solo estilos básicos de layout */
+	.footer-item, .footer-divider, .footer-bottom {
+		will-change: opacity, transform;
+	}
+	
+	/* Transiciones de página */
+	html[data-astro-transition] footer#footer {
+		opacity: 1;
 	}
 </style>

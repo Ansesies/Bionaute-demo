@@ -3,6 +3,71 @@
 ---
 
 <script>
-  // Este script solo registra la carga y deriva la funcionalidad al archivo externo header.js
-  console.log('HeaderScript: Usando funcionalidad externa desde /js/header.js');
+  // Script dedicado exclusivamente a la funcionalidad del header
+  console.log('HeaderScript: Inicializado');
+  
+  // Función para inicializar el header
+  function initializeHeader(): void {
+    console.log('HeaderScript: Inicializando header');
+    
+    // Manejar estado inicial del header
+    const header = document.getElementById('header');
+    if (!header) return;
+    
+    // Asegurar clases iniciales según la posición de scroll
+    updateHeaderAppearance(header);
+    
+    // Configurar event listeners para el header
+    setupHeaderEventListeners();
+  }
+  
+  // Función para actualizar la apariencia del header según la posición de scroll
+  function updateHeaderAppearance(header: HTMLElement): void {
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    
+    // Aplicar clases según la posición de scroll
+    if (scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }
+  
+  // Función para configurar event listeners del header
+  function setupHeaderEventListeners(): void {
+    // Escuchar scroll para actualizar apariencia
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (header) updateHeaderAppearance(header as HTMLElement);
+    });
+    
+    // Configurar menú móvil si existe
+    setupMobileMenu();
+  }
+  
+  // Función para configurar el menú móvil
+  function setupMobileMenu(): void {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+  }
+  
+  // Inicializar header cuando el DOM está listo
+  initializeHeader();
+  
+  // También reinicializar en navegación
+  document.addEventListener('astro:page-load', () => {
+    console.log('HeaderScript: astro:page-load detectado');
+    initializeHeader();
+  });
+  
+  // Verificación adicional cuando todo esté cargado
+  window.addEventListener('load', () => {
+    initializeHeader();
+  });
 </script>
