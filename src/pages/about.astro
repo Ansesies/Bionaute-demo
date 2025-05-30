@@ -77,7 +77,7 @@ import Layout from '../layouts/Layout.astro';
         
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Valor 1: Sostenibilidad -->
-          <div class="value-card bg-white p-8 rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 opacity-0" style="transform: translateY(60px) scale(0.9);">
+          <div class="value-card bg-white p-8 rounded-xl shadow-md hover:shadow-xl transform hover:scale-105">
             <div class="bg-emerald-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -91,7 +91,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
           
           <!-- Valor 2: Innovación -->
-          <div class="value-card bg-white p-8 rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 opacity-0" style="transform: translateY(60px) scale(0.9);">
+          <div class="value-card bg-white p-8 rounded-xl shadow-md hover:shadow-xl transform hover:scale-105">
             <div class="bg-emerald-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -105,7 +105,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
           
           <!-- Valor 3: Compromiso -->
-          <div class="value-card bg-white p-8 rounded-xl shadow-md hover:shadow-xl transform hover:scale-105 opacity-0" style="transform: translateY(60px) scale(0.9);">
+          <div class="value-card bg-white p-8 rounded-xl shadow-md hover:shadow-xl transform hover:scale-105">
             <div class="bg-emerald-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-6 mx-auto">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -307,39 +307,21 @@ import Layout from '../layouts/Layout.astro';
   
   /* Animación específica para tarjetas de valores */
   .value-card {
-    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-    transform-origin: center;
-    perspective: 1000px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
-    view-transition-name: none;
-    filter: blur(3px);
   }
   
-  .value-card.animate-card {
+  .value-card.in-view {
     opacity: 1;
-    transform: translateY(0) rotate(0deg) scale(1);
-    box-shadow: 0 15px 25px rgba(15, 118, 110, 0.15), 
-                0 5px 10px rgba(15, 118, 110, 0.08);
-    filter: blur(0);
+    transform: translateY(0);
   }
   
   /* Animación secuencial para tarjetas de valores */
-  .value-card:nth-child(1) {
-    transition-delay: 0.1s;
-  }
-  
-  .value-card:nth-child(2) {
-    transition-delay: 0.3s;
-  }
-  
-  .value-card:nth-child(3) {
-    transition-delay: 0.5s;
-  }
-  
-  /* Estilos adicionales para tarjetas con hover */
-  section {
-    scroll-margin-top: 80px; /* Ajuste para navegación con anclas */
-  }
+  .value-card:nth-child(1).in-view { transition-delay: 0s; }
+  .value-card:nth-child(2).in-view { transition-delay: 0.2s; }
+  .value-card:nth-child(3).in-view { transition-delay: 0.4s; }
   
   /* Mejoras para responsividad en móviles */
   @media (max-width: 640px) {
@@ -354,3 +336,32 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 </style>
+
+<script>
+  // Función para inicializar la animación cuando el elemento es visible
+  function handleIntersection(entries: IntersectionObserverEntry[]) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+      }
+    });
+  }
+
+  // Función para configurar el observador
+  function setupValueCardsAnimation() {
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -10% 0px'
+    });
+
+    // Observar todas las tarjetas de valores
+    document.querySelectorAll('.value-card').forEach(card => {
+      observer.observe(card);
+    });
+  }
+
+  // Inicializar cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', setupValueCardsAnimation);
+  // Reinicializar después de las transiciones de página de Astro
+  document.addEventListener('astro:page-load', setupValueCardsAnimation);
+</script>
