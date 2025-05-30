@@ -1,0 +1,135 @@
+---
+// Hero Component para Bionaute - empresa de biotecnología y agricultura sustentable
+---
+
+<section id="hero" class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+  <!-- Imagen de fondo con overlay para sombreado -->
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/80 to-black/50 mix-blend-multiply z-10"></div>
+    <img 
+      src="/cultivo_uva.jpg" 
+      alt="Cultivo de uva sustentable" 
+      class="w-full h-full object-cover object-center"
+      loading="eager"
+    />
+  </div>
+  
+  <!-- Contenido del Hero -->
+  <div class="container mx-auto px-4 md:px-6 py-8 md:py-12 z-10 relative pt-16 mt-6 md:mt-10 overflow-y-auto max-h-screen md:max-h-none">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="animate-fadeIn opacity-0" style="animation: fadeIn 1s ease-out forwards 0.2s;">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-3 md:mb-4">
+          Innovación Biotecnológica para un <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-teal-400">Futuro Sustentable</span>
+        </h1>
+      </div>
+      
+      <div class="animate-fadeIn opacity-0" style="animation: fadeIn 1s ease-out forwards 0.6s;">
+        <p class="text-base sm:text-lg md:text-xl font-medium text-gray-200 mb-6 sm:mb-8 max-w-3xl mx-auto px-1">
+          Soluciones avanzadas para la protección de cultivos y agricultura sostenible que maximizan el rendimiento respetando el medio ambiente.
+        </p>
+      </div>
+      
+      <div class="animate-fadeIn opacity-0 flex flex-col sm:flex-row gap-4 justify-center" style="animation: fadeIn 1s ease-out forwards 1s;">
+        <a 
+          href="#services" 
+          class="px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-medium rounded-md hover:from-emerald-700 hover:to-teal-600 transition-all duration-300 shadow-lg hover:shadow-emerald-500/50 transform hover:-translate-y-1"
+        >
+          Nuestras Soluciones
+        </a>
+        <a 
+          href="#about" 
+          class="px-6 py-3 bg-white/20 backdrop-blur-sm text-white font-medium rounded-md hover:bg-white/30 transition-all duration-300 shadow-lg transform hover:-translate-y-1"
+        >
+          Conócenos
+        </a>
+      </div>
+      
+      <!-- Estadísticas o características destacadas -->
+      <div class="mt-10 sm:mt-12 md:mt-16 mb-10 sm:mb-12 md:mb-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 animate-fadeUp opacity-0" style="animation: fadeUp 1s ease-out forwards 1.4s;">
+        <div class="bg-white/10 backdrop-blur-sm p-4 sm:p-6 rounded-lg">
+          <div class="flex justify-center mb-3 sm:mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 sm:h-12 sm:w-12 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          </div>
+          <h3 class="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">Innovación Continua</h3>
+          <p class="text-gray-300 text-sm sm:text-base">Investigación y desarrollo constantes para encontrar soluciones biotecnológicas de vanguardia.</p>
+        </div>
+        
+        <div class="bg-white/10 backdrop-blur-sm p-4 sm:p-6 rounded-lg">
+          <div class="flex justify-center mb-3 sm:mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 sm:h-12 sm:w-12 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h.5A2.5 2.5 0 0020 5.5v-1.65" />
+            </svg>
+          </div>
+          <h3 class="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">Sustentabilidad</h3>
+          <p class="text-gray-300 text-sm sm:text-base">Comprometidos con prácticas agrícolas que respetan y preservan nuestro planeta.</p>
+        </div>
+        
+        <div class="bg-white/10 backdrop-blur-sm p-4 sm:p-6 rounded-lg">
+          <div class="flex justify-center mb-3 sm:mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 sm:h-12 sm:w-12 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">Protección Efectiva</h3>
+          <p class="text-gray-300 text-sm sm:text-base">Soluciones que protegen tus cultivos asegurando mayor rendimiento y calidad.</p>
+        </div>
+      </div>
+      
+      <!-- Indicador de scroll para pantallas grandes - posición absoluta -->
+      <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:flex flex-col items-center">
+        <a href="#about" class="flex flex-col items-center text-white/90 hover:text-white transition-colors backdrop-blur-sm rounded-full p-2 hover:bg-black/30">
+          <span class="text-sm mb-1">Descubre más</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </a>
+      </div>
+      
+      <!-- Indicador de scroll para móviles - integrado en el flujo -->
+      <div class="md:hidden flex justify-center mt-6 animate-bounce">
+        <a href="#about" class="flex flex-col items-center text-white/90 hover:text-white transition-colors bg-black/20 backdrop-blur-sm rounded-full p-2 hover:bg-black/30">
+          <span class="text-xs sm:text-sm mb-1">Descubre más</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Ajuste para que el hero ocupe toda la pantalla sin espacio en la parte superior */
+  #hero {
+    margin-top: 0;
+    padding-top: 0;
+    min-height: 100vh; /* Altura completa de la ventana */
+    height: auto; /* Permite crecer si el contenido es demasiado alto para pantallas pequeñas */
+  }
+  
+  @media (max-height: 700px) {
+    #hero {
+      height: auto;
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fadeIn {
+    opacity: 0;
+  }
+  
+  .animate-fadeUp {
+    opacity: 0;
+  }
+</style>
