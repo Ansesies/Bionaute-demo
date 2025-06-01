@@ -1,0 +1,546 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="pt-16 md:pt-20"> <!-- Espacio para el header fijo -->
+    <!-- Header de la sección Servicios -->
+    <section id="services-header" class="bg-gradient-to-br from-emerald-900 to-teal-800 py-16 md:py-24">
+      <div class="container mx-auto px-4 md:px-6 text-center">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-8 animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.2s;">
+          Nuestros Servicios
+        </h1>
+        <div class="max-w-3xl mx-auto">
+          <p class="text-lg md:text-xl text-green-50 mb-6 animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.4s;">
+            Soluciones biotecnológicas avanzadas para potenciar sus cultivos de manera sustentable y eficiente.
+          </p>
+          <div class="w-20 h-1 bg-green-300 mx-auto rounded-full animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.6s;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios Destacados -->
+    <section id="featured-services" class="py-16 md:py-24 bg-white">
+      <div class="container mx-auto px-4 md:px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-emerald-800 mb-4">Servicios Destacados</h2>
+          <p class="text-gray-700">
+            Nuestras soluciones biotecnológicas están diseñadas para maximizar el rendimiento y la sostenibilidad de sus cultivos.
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16 ">
+          <!-- Servicio 1 -->
+          <div class="service-card p-4">
+            <div class="bg-white rounded-xl overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl relative h-full flex flex-col">
+              <div class="h-48 bg-emerald-100 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/20 to-teal-700/30"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <h3 class="text-xl font-bold text-emerald-800 mb-3">Análisis de Suelos</h3>
+                <p class="text-gray-700 mb-4 flex-1">
+                  Evaluación completa de las propiedades físicas, químicas y biológicas de sus suelos para optimizar la producción agrícola.
+                </p>
+                <div class="mt-2">
+                  <a href="#soil-analysis" class="inline-flex items-center text-emerald-700 font-medium hover:text-emerald-600 transition-colors">
+                    Más información
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Servicio 2 -->
+          <div class="service-card p-4">
+            <div class="bg-white rounded-xl overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl relative h-full flex flex-col">
+              <div class="h-48 bg-emerald-100 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/20 to-teal-700/30"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <h3 class="text-xl font-bold text-emerald-800 mb-3">Biopesticidas Especializados</h3>
+                <p class="text-gray-700 mb-4 flex-1">
+                  Soluciones biológicas para el control de plagas que no comprometen la salud del suelo ni el ecosistema circundante.
+                </p>
+                <div class="mt-2">
+                  <a href="#biopesticides" class="inline-flex items-center text-emerald-700 font-medium hover:text-emerald-600 transition-colors">
+                    Más información
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Servicio 3 -->
+          <div class="service-card p-4">
+            <div class="bg-white rounded-xl overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl relative h-full flex flex-col">
+              <div class="h-48 bg-emerald-100 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-600/20 to-teal-700/30"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                  </svg>
+                </div>
+              </div>
+              <div class="p-6 flex-1 flex flex-col">
+                <h3 class="text-xl font-bold text-emerald-800 mb-3">Biofertilizantes</h3>
+                <p class="text-gray-700 mb-4 flex-1">
+                  Productos que mejoran la nutrición vegetal, incrementan el rendimiento y fortalecen la salud de sus cultivos de forma natural.
+                </p>
+                <div class="mt-2">
+                  <a href="#biofertilizers" class="inline-flex items-center text-emerald-700 font-medium hover:text-emerald-600 transition-colors">
+                    Más información
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proceso de Trabajo -->
+    <section id="work-process" class="py-16 md:py-28 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      <!-- Elementos decorativos sutiles -->
+      <div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-5">
+        <div class="absolute w-96 h-96 -top-20 -left-20 bg-emerald-500 rounded-full blur-3xl"></div>
+        <div class="absolute w-96 h-96 bottom-0 -right-20 bg-teal-600 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div class="container mx-auto px-4 md:px-6 relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-16 md:mb-20 process-header">
+          <span class="inline-block px-4 py-1 bg-emerald-100 text-emerald-800 font-medium rounded-full text-sm mb-4">Metodología</span>
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-emerald-800 mb-4">Nuestro Proceso</h2>
+          <p class="text-gray-700 text-lg">
+            Trabajamos de forma metódica y personalizada para garantizar resultados óptimos con un enfoque científico.
+          </p>
+        </div>
+        
+        <!-- Proceso horizontal simplificado -->
+        <div class="grid md:grid-cols-4 gap-6 md:gap-8 relative">
+          <!-- Línea conectora (visible en desktop) -->
+          <div class="hidden lg:block absolute top-24 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 via-teal-500 to-emerald-400 opacity-30 z-0"></div>
+          
+          <!-- Paso 1 -->
+          <div class="process-step bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow duration-300 relative z-10 flex flex-col items-center text-center">
+            <div class="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-bold text-xl mb-4">1</div>
+            <h3 class="text-lg font-bold text-emerald-800 mb-2">Diagnóstico Completo</h3>
+            <p class="text-gray-600 text-sm">
+              Evaluación exhaustiva de su cultivo utilizando tecnología de vanguardia para identificar necesidades específicas.
+            </p>
+            <div class="mt-4 opacity-70">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Paso 2 -->
+          <div class="process-step bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow duration-300 relative z-10 flex flex-col items-center text-center">
+            <div class="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-bold text-xl mb-4">2</div>
+            <h3 class="text-lg font-bold text-emerald-800 mb-2">Planificación Estratégica</h3>
+            <p class="text-gray-600 text-sm">
+              Desarrollo de un plan personalizado con soluciones biotecnológicas específicas basado en evidencia científica.
+            </p>
+            <div class="mt-4 opacity-70">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Paso 3 -->
+          <div class="process-step bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow duration-300 relative z-10 flex flex-col items-center text-center">
+            <div class="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-bold text-xl mb-4">3</div>
+            <h3 class="text-lg font-bold text-emerald-800 mb-2">Implementación Profesional</h3>
+            <p class="text-gray-600 text-sm">
+              Aplicación de soluciones biotecnológicas con técnicas de precisión y acompañamiento técnico constante.
+            </p>
+            <div class="mt-4 opacity-70">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+            </div>
+          </div>
+          
+          <!-- Paso 4 -->
+          <div class="process-step bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow duration-300 relative z-10 flex flex-col items-center text-center">
+            <div class="w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white font-bold text-xl mb-4">4</div>
+            <h3 class="text-lg font-bold text-emerald-800 mb-2">Monitoreo y Optimización</h3>
+            <p class="text-gray-600 text-sm">
+              Seguimiento continuo con análisis periódicos para optimizar el rendimiento y garantizar la sostenibilidad.
+            </p>
+            <div class="mt-4 opacity-70">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Móvil: Vista de pasos -->
+        <div class="md:hidden mt-10 space-y-6">
+          <div class="flex items-start p-3 bg-white rounded-lg shadow-sm">
+            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-emerald-100 text-emerald-800 font-bold mr-4">1</div>
+            <div>
+              <h4 class="font-semibold text-emerald-800 mb-1">Diagnóstico Completo</h4>
+              <p class="text-gray-600 text-sm">Evaluación exhaustiva de su cultivo con tecnología avanzada.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start p-3 bg-white rounded-lg shadow-sm">
+            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-emerald-100 text-emerald-800 font-bold mr-4">2</div>
+            <div>
+              <h4 class="font-semibold text-emerald-800 mb-1">Planificación Estratégica</h4>
+              <p class="text-gray-600 text-sm">Plan personalizado con soluciones biotecnológicas específicas.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start p-3 bg-white rounded-lg shadow-sm">
+            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-emerald-100 text-emerald-800 font-bold mr-4">3</div>
+            <div>
+              <h4 class="font-semibold text-emerald-800 mb-1">Implementación Profesional</h4>
+              <p class="text-gray-600 text-sm">Aplicación de soluciones con acompañamiento técnico constante.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start p-3 bg-white rounded-lg shadow-sm">
+            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-emerald-100 text-emerald-800 font-bold mr-4">4</div>
+            <div>
+              <h4 class="font-semibold text-emerald-800 mb-1">Monitoreo y Optimización</h4>
+              <p class="text-gray-600 text-sm">Seguimiento continuo para garantizar resultados a largo plazo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Análisis y Entrega -->
+    <section id="analysis-delivery" class="py-16 md:py-24 bg-white">
+      <div class="container mx-auto px-4 md:px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-emerald-800 mb-4">Análisis Especializado</h2>
+          <p class="text-gray-700">
+            La base de nuestros servicios es un riguroso proceso de análisis científico.
+          </p>
+        </div>
+        
+        <div class="grid lg:grid-cols-2 gap-x-12 gap-y-16 items-center">
+          <!-- Tarjetas de Servicio -->
+          <div class="analysis-card bg-gray-50 p-8 rounded-t-xl shadow-lg">
+            <div class="flex flex-col md:flex-row gap-6 items-start">
+              <div class="flex-shrink-0">
+                <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-emerald-800 mb-3">Análisis Molecular</h3>
+                <p class="text-gray-700 mb-4">
+                  Utilizamos técnicas de biología molecular para identificar patógenos, verificar la calidad genética y optimizar la selección de cultivares.
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Diagnóstico de patógenos moleculares
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Detección de resistencia a enfermedades
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Caracterización genética
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="analysis-card bg-gray-50 p-8  shadow-lg">
+            <div class="flex flex-col md:flex-row gap-6 items-start">
+              <div class="flex-shrink-0">
+                <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-emerald-800 mb-3">Análisis Climático</h3>
+                <p class="text-gray-700 mb-4">
+                  Evaluamos las condiciones climáticas específicas de su ubicación para optimizar ciclos de cultivo y gestión de recursos.
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Previsión de eventos climáticos
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Análisis de microclimas
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Optimización de ciclos de riego
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="analysis-card bg-gray-50 p-8 shadow-lg">
+            <div class="flex flex-col md:flex-row gap-6 items-start">
+              <div class="flex-shrink-0">
+                <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-emerald-800 mb-3">Análisis Nutrimental</h3>
+                <p class="text-gray-700 mb-4">
+                  Evaluamos las características nutricionales del suelo para diseñar programas de fertilización óptimos.
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Análisis de macro y micronutrientes
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Evaluación de pH y conductividad
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Recomendaciones de fertilización
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="analysis-card bg-gray-50 p-8  shadow-lg">
+            <div class="flex flex-col md:flex-row gap-6 items-start">
+              <div class="flex-shrink-0">
+                <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-emerald-800 mb-3">Certificaciones</h3>
+                <p class="text-gray-700 mb-4">
+                  Facilitamos la obtención de certificaciones de agricultura orgánica y sustentable para sus cultivos y productos.
+                </p>
+                <ul class="space-y-2 text-gray-700">
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Certificación orgánica
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Sellos de sustentabilidad
+                  </li>
+                  <li class="flex items-start">
+                    <svg class="w-5 h-5 text-emerald-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Estándares internacionales
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA -->
+    <section id="services-cta" class="py-16 md:py-24 bg-gradient-to-br from-emerald-800 to-teal-900">
+      <div class="container mx-auto px-4 md:px-6 text-center">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6">¿Buscando potenciar sus cultivos?</h2>
+          <p class="text-lg text-green-100 mb-8 md:mb-10">
+            Nuestras soluciones biotecnológicas personalizadas están diseñadas para optimizar el rendimiento y la sostenibilidad de sus cultivos.
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#contact" class="inline-block px-6 py-3 bg-green-400 hover:bg-green-300 text-emerald-900 font-semibold rounded-md transition-colors duration-300 transform hover:scale-105">
+              Solicitar una consulta
+            </a>
+            <a href="/about" class="inline-block px-6 py-3 bg-transparent border-2 border-green-400 text-green-300 hover:bg-green-400/10 font-semibold rounded-md transition-colors duration-300">
+              Conozca más sobre nosotros
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  /* Animaciones para la página Services */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Animación para tarjetas de servicio */
+  .service-card {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  
+  .service-card.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Animación para los pasos del proceso */
+  .process-step {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  
+  .process-step.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Efectos hover para los pasos del proceso */
+  .process-step:hover {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .process-step:hover .w-16 {
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .w-16 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Animación para la imagen del proceso */
+  .process-image {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  
+  .process-image.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  /* Animación para tarjetas de análisis */
+  .analysis-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  
+  .analysis-card.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Animación secuencial para tarjetas */
+  .service-card:nth-child(1).in-view { transition-delay: 0s; }
+  .service-card:nth-child(2).in-view { transition-delay: 0.2s; }
+  .service-card:nth-child(3).in-view { transition-delay: 0.4s; }
+  
+  .process-step:nth-child(1).in-view { transition-delay: 0.1s; }
+  .process-step:nth-child(2).in-view { transition-delay: 0.3s; }
+  .process-step:nth-child(3).in-view { transition-delay: 0.5s; }
+  .process-step:nth-child(4).in-view { transition-delay: 0.7s; }
+  
+  .analysis-card:nth-child(1).in-view { transition-delay: 0s; }
+  .analysis-card:nth-child(2).in-view { transition-delay: 0.2s; }
+  .analysis-card:nth-child(3).in-view { transition-delay: 0.4s; }
+  .analysis-card:nth-child(4).in-view { transition-delay: 0.6s; }
+</style>
+
+<script>
+  // Función para inicializar la animación cuando el elemento es visible
+  function handleIntersection(entries: IntersectionObserverEntry[]) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+      }
+    });
+  }
+
+  // Función para configurar el observador
+  function setupServicesAnimation() {
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -20% 0px'
+    });
+
+    // Observar todos los elementos animados
+    document.querySelectorAll('.service-card, .process-step, .analysis-card').forEach(element => {
+      observer.observe(element);
+    });
+  }
+
+  // Inicializar cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', setupServicesAnimation);
+  // Reinicializar después de las transiciones de página de Astro
+  document.addEventListener('astro:page-load', setupServicesAnimation);
+</script>

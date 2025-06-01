@@ -25,20 +25,16 @@ import Layout from '../layouts/Layout.astro';
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <!-- Columna de Imagen -->
           <div class="order-2 md:order-1 overflow-hidden rounded-lg shadow-xl animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.4s;">
-            <div class="relative h-80 md:h-96 bg-gradient-to-br from-emerald-600 to-teal-700 p-0.5 rounded-lg">
-              <div class="absolute inset-0 bg-opacity-60 flex items-center justify-center bg-emerald-900">
+            <div class="relative h-80 md:h-96  rounded-lg">
+              <div class="absolute inset-0 bg-opacity-60 flex items-center justify-center">
                 <img 
-                  src="/cultivo_uva.jpg" 
+                  src="/cultivo_arandanos.jpg" 
                   alt="Agricultura sustentable" 
                   class="w-full h-full object-cover object-center mix-blend-overlay opacity-80"
                   loading="lazy"
                 />
               </div>
-              <div class="absolute inset-0 flex items-center justify-center p-8">
-                <div class="bg-black/30 p-6 backdrop-blur-sm rounded-lg max-w-sm">
-                  <p class="text-xl text-white font-semibold text-center">"Innovación sostenible para el futuro de la agricultura"</p>
-                </div>
-              </div>
+            
             </div>
           </div>
           
@@ -133,7 +129,7 @@ import Layout from '../layouts/Layout.astro';
         
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- Miembro 1 -->
-          <div class="animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.3s;">
+          <div class="team-card">
             <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md">
               <div class="h-64 bg-emerald-800 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-emerald-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -151,7 +147,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
           
           <!-- Miembro 2 -->
-          <div class="animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.4s;">
+          <div class="team-card">
             <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md">
               <div class="h-64 bg-emerald-800 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-emerald-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -169,7 +165,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
           
           <!-- Miembro 3 -->
-          <div class="animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.5s;">
+          <div class="team-card">
             <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md">
               <div class="h-64 bg-emerald-800 flex items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-emerald-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -202,8 +198,8 @@ import Layout from '../layouts/Layout.astro';
           
           <!-- Línea de tiempo -->
           <div class="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-emerald-600 before:to-emerald-400 before:via-emerald-500">
-            <!-- Evento 1 -->
-            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.3s;">
+            <!-- Evento 1 - Fundación (aparece desde la derecha) -->
+            <div class="history-card history-right relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
               <div class="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-emerald-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
                 <span class="w-3 h-3 bg-emerald-600 rounded-full"></span>
               </div>
@@ -219,8 +215,8 @@ import Layout from '../layouts/Layout.astro';
               </div>
             </div>
             
-            <!-- Evento 2 -->
-            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.4s;">
+            <!-- Evento 2 - Primera Patente (aparece desde la izquierda) -->
+            <div class="history-card history-left relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
               <div class="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-emerald-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
                 <span class="w-3 h-3 bg-emerald-600 rounded-full"></span>
               </div>
@@ -236,8 +232,8 @@ import Layout from '../layouts/Layout.astro';
               </div>
             </div>
             
-            <!-- Evento 3 -->
-            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.5s;">
+            <!-- Evento 3 - Expansión Internacional (aparece desde la derecha) -->
+            <div class="history-card history-right relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
               <div class="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-emerald-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
                 <span class="w-3 h-3 bg-emerald-600 rounded-full"></span>
               </div>
@@ -253,8 +249,8 @@ import Layout from '../layouts/Layout.astro';
               </div>
             </div>
             
-            <!-- Evento 4 -->
-            <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group animate-fadeIn opacity-0" style="animation: fadeIn 0.8s ease-out forwards 0.6s;">
+            <!-- Evento 4 - Actualidad (aparece desde la izquierda) -->
+            <div class="history-card history-left relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
               <div class="flex items-center justify-center w-10 h-10 rounded-full bg-white border border-emerald-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
                 <span class="w-3 h-3 bg-emerald-600 rounded-full"></span>
               </div>
@@ -305,23 +301,57 @@ import Layout from '../layouts/Layout.astro';
     to { opacity: 1; transform: translateY(0); }
   }
   
-  /* Animación específica para tarjetas de valores */
-  .value-card {
+  /* Animación específica para tarjetas de valores y equipo */
+  .value-card, .team-card {
     opacity: 0;
     transform: translateY(40px);
     transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
   }
   
-  .value-card.in-view {
+  .value-card.in-view, .team-card.in-view {
     opacity: 1;
     transform: translateY(0);
+  }
+  
+  /* Animaciones para la sección de historia */
+  .history-card {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  
+  /* Animación desde la derecha */
+  .history-right {
+    transform: translateX(60px);
+  }
+  
+  /* Animación desde la izquierda */
+  .history-left {
+    transform: translateX(-60px);
+  }
+  
+  /* Estado visible para ambas direcciones */
+  .history-card.in-view {
+    opacity: 1;
+    transform: translateX(0);
   }
   
   /* Animación secuencial para tarjetas de valores */
   .value-card:nth-child(1).in-view { transition-delay: 0s; }
   .value-card:nth-child(2).in-view { transition-delay: 0.2s; }
   .value-card:nth-child(3).in-view { transition-delay: 0.4s; }
+  
+  /* Animación secuencial para tarjetas de equipo */
+  .team-card:nth-child(1).in-view { transition-delay: 0s; }
+  .team-card:nth-child(2).in-view { transition-delay: 0.2s; }
+  .team-card:nth-child(3).in-view { transition-delay: 0.4s; }
+  
+  /* Animación secuencial para tarjetas de historia */
+  .history-card:nth-child(1).in-view { transition-delay: 0s; }
+  .history-card:nth-child(2).in-view { transition-delay: 0.3s; }
+  .history-card:nth-child(3).in-view { transition-delay: 0.6s; }
+  .history-card:nth-child(4).in-view { transition-delay: 0.9s; }
   
   /* Mejoras para responsividad en móviles */
   @media (max-width: 640px) {
@@ -348,20 +378,20 @@ import Layout from '../layouts/Layout.astro';
   }
 
   // Función para configurar el observador
-  function setupValueCardsAnimation() {
+  function setupCardsAnimation() {
     const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0.2,
-      rootMargin: '0px 0px -10% 0px'
+      rootMargin: '0px 0px -20% 0px'
     });
 
-    // Observar todas las tarjetas de valores
-    document.querySelectorAll('.value-card').forEach(card => {
+    // Observar todas las tarjetas de valores, equipo e historia
+    document.querySelectorAll('.value-card, .team-card, .history-card').forEach(card => {
       observer.observe(card);
     });
   }
 
   // Inicializar cuando el DOM esté listo
-  document.addEventListener('DOMContentLoaded', setupValueCardsAnimation);
+  document.addEventListener('DOMContentLoaded', setupCardsAnimation);
   // Reinicializar después de las transiciones de página de Astro
-  document.addEventListener('astro:page-load', setupValueCardsAnimation);
+  document.addEventListener('astro:page-load', setupCardsAnimation);
 </script>
