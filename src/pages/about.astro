@@ -278,7 +278,7 @@ import Layout from '../layouts/Layout.astro';
           <p class="text-lg text-green-100 mb-8">
             Descubre cómo nuestras soluciones biotecnológicas pueden mejorar tus cultivos de manera sostenible.
           </p>
-          <a href="#contact" class="inline-block px-6 py-3 bg-green-400 hover:bg-green-300 text-emerald-900 font-semibold rounded-md transition-colors duration-300 transform hover:scale-105">
+          <a href="/contact" class="inline-block px-6 py-3 bg-green-400 hover:bg-green-300 text-emerald-900 font-semibold rounded-md transition-colors duration-300 transform hover:scale-105">
             Contáctanos hoy
           </a>
         </div>
@@ -380,7 +380,7 @@ import Layout from '../layouts/Layout.astro';
   // Función para configurar el observador
   function setupCardsAnimation() {
     const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0.2,
+      threshold: 0.1,
       rootMargin: '0px 0px -20% 0px'
     });
 

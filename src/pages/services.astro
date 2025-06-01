@@ -197,40 +197,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
         
         <!-- Móvil: Vista de pasos -->
-        <div class="md:hidden mt-10 space-y-6">
-          <div class="flex items-start p-3 bg-white rounded-lg shadow-sm">
-            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-emerald-100 text-emerald-800 font-bold mr-4">1</div>
-            <div>
-              <h4 class="font-semibold text-emerald-800 mb-1">Diagnóstico Completo</h4>
-              <p class="text-gray-600 text-sm">Evaluación exhaustiva de su cultivo con tecnología avanzada.</p>
-            </div>
-          </div>
-          
-          <div class="flex items-start p-3 bg-white rounded-lg shadow-sm">
-            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-emerald-100 text-emerald-800 font-bold mr-4">2</div>
-            <div>
-              <h4 class="font-semibold text-emerald-800 mb-1">Planificación Estratégica</h4>
-              <p class="text-gray-600 text-sm">Plan personalizado con soluciones biotecnológicas específicas.</p>
-            </div>
-          </div>
-          
-          <div class="flex items-start p-3 bg-white rounded-lg shadow-sm">
-            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-emerald-100 text-emerald-800 font-bold mr-4">3</div>
-            <div>
-              <h4 class="font-semibold text-emerald-800 mb-1">Implementación Profesional</h4>
-              <p class="text-gray-600 text-sm">Aplicación de soluciones con acompañamiento técnico constante.</p>
-            </div>
-          </div>
-          
-          <div class="flex items-start p-3 bg-white rounded-lg shadow-sm">
-            <div class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full bg-emerald-100 text-emerald-800 font-bold mr-4">4</div>
-            <div>
-              <h4 class="font-semibold text-emerald-800 mb-1">Monitoreo y Optimización</h4>
-              <p class="text-gray-600 text-sm">Seguimiento continuo para garantizar resultados a largo plazo.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+        
     </section>
 
     <!-- Análisis y Entrega -->
@@ -409,7 +376,7 @@ import Layout from '../layouts/Layout.astro';
             Nuestras soluciones biotecnológicas personalizadas están diseñadas para optimizar el rendimiento y la sostenibilidad de sus cultivos.
           </p>
           <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="#contact" class="inline-block px-6 py-3 bg-green-400 hover:bg-green-300 text-emerald-900 font-semibold rounded-md transition-colors duration-300 transform hover:scale-105">
+            <a href="/contact" class="inline-block px-6 py-3 bg-green-400 hover:bg-green-300 text-emerald-900 font-semibold rounded-md transition-colors duration-300 transform hover:scale-105">
               Solicitar una consulta
             </a>
             <a href="/about" class="inline-block px-6 py-3 bg-transparent border-2 border-green-400 text-green-300 hover:bg-green-400/10 font-semibold rounded-md transition-colors duration-300">
@@ -531,7 +498,7 @@ import Layout from '../layouts/Layout.astro';
   // Función para configurar el observador
   function setupServicesAnimation() {
     const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0.2,
+      threshold: 0.1,
       rootMargin: '0px 0px -20% 0px'
     });
 
