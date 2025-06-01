@@ -368,6 +368,8 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
+  let aboutObserver: IntersectionObserver | null = null;
+
   // Función para inicializar la animación cuando el elemento es visible
   function handleIntersection(entries: IntersectionObserverEntry[]) {
     entries.forEach(entry => {
@@ -377,21 +379,58 @@ import Layout from '../layouts/Layout.astro';
     });
   }
 
+  // Función para limpiar animaciones previas
+  function resetAboutAnimations() {
+    // Remover clases de animación existentes
+    document.querySelectorAll('.value-card, .team-card, .history-card').forEach(element => {
+      element.classList.remove('in-view');
+    });
+    
+    // Desconectar observer anterior si existe
+    if (aboutObserver) {
+      aboutObserver.disconnect();
+    }
+  }
+
   // Función para configurar el observador
   function setupCardsAnimation() {
-    const observer = new IntersectionObserver(handleIntersection, {
+    // Limpiar animaciones previas
+    resetAboutAnimations();
+    
+    // Crear nuevo observer
+    aboutObserver = new IntersectionObserver(handleIntersection, {
       threshold: 0.1,
       rootMargin: '0px 0px -20% 0px'
     });
 
     // Observar todas las tarjetas de valores, equipo e historia
     document.querySelectorAll('.value-card, .team-card, .history-card').forEach(card => {
-      observer.observe(card);
+      if (aboutObserver) {
+        aboutObserver.observe(card);
+      }
     });
   }
 
+  // Función para inicializar la página
+  function initializeAboutPage() {
+    // Pequeño delay para asegurar que el DOM esté completamente cargado
+    setTimeout(setupCardsAnimation, 100);
+  }
+
+  // Función para limpiar al salir de la página
+  function cleanupAboutPage() {
+    if (aboutObserver) {
+      aboutObserver.disconnect();
+      aboutObserver = null;
+    }
+  }
+
   // Inicializar cuando el DOM esté listo
-  document.addEventListener('DOMContentLoaded', setupCardsAnimation);
+  document.addEventListener('DOMContentLoaded', initializeAboutPage);
+  
   // Reinicializar después de las transiciones de página de Astro
-  document.addEventListener('astro:page-load', setupCardsAnimation);
+  document.addEventListener('astro:page-load', initializeAboutPage);
+  
+  // Limpiar antes de las transiciones
+  document.addEventListener('astro:before-preparation', cleanupAboutPage);
 </script>

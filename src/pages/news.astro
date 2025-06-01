@@ -455,14 +455,19 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
+  let newsObserver: IntersectionObserver | null = null;
+
   function initNewsAnimations() {
+    // Limpiar animaciones previas
+    resetNewsAnimations();
+    
     // Configurar Intersection Observer para animaciones de scroll
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    newsObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
@@ -474,9 +479,6 @@ import Layout from '../layouts/Layout.astro';
               card.classList.add('in-view');
             });
           }
-          
-          // No volver a observar el elemento una vez animado
-          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
@@ -487,10 +489,28 @@ import Layout from '../layouts/Layout.astro';
     );
     
     animatedElements.forEach((el) => {
-      observer.observe(el);
+      if (newsObserver) {
+        newsObserver.observe(el);
+      }
     });
 
     // Funcionalidad de filtros
+    setupNewsFilters();
+  }
+
+  function resetNewsAnimations() {
+    // Remover clases de animación existentes
+    document.querySelectorAll('.section-header, .filter-buttons, .featured-article, .news-card, .load-more-section, .newsletter-section').forEach(element => {
+      element.classList.remove('in-view');
+    });
+    
+    // Desconectar observer anterior si existe
+    if (newsObserver) {
+      newsObserver.disconnect();
+    }
+  }
+
+  function setupNewsFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const newsCards = document.querySelectorAll('.news-card') as NodeListOf<HTMLElement>;
 
@@ -528,9 +548,24 @@ import Layout from '../layouts/Layout.astro';
     });
   }
 
+  function initializeNewsPage() {
+    // Pequeño delay para asegurar que el DOM esté completamente cargado
+    setTimeout(initNewsAnimations, 100);
+  }
+
+  function cleanupNewsPage() {
+    if (newsObserver) {
+      newsObserver.disconnect();
+      newsObserver = null;
+    }
+  }
+
   // Inicializar animaciones cuando el DOM esté listo
-  document.addEventListener('DOMContentLoaded', initNewsAnimations);
+  document.addEventListener('DOMContentLoaded', initializeNewsPage);
   
   // También inicializar en caso de navegación con View Transitions
-  document.addEventListener('astro:page-load', initNewsAnimations);
+  document.addEventListener('astro:page-load', initializeNewsPage);
+  
+  // Limpiar antes de las transiciones
+  document.addEventListener('astro:before-preparation', cleanupNewsPage);
 </script>

@@ -306,6 +306,9 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
+  let contactObserver: IntersectionObserver | null = null;
+
+  // Función para manejar intersección
   function handleIntersection(entries: IntersectionObserverEntry[]) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -314,20 +317,58 @@ import Layout from '../layouts/Layout.astro';
     });
   }
 
+  // Función para limpiar animaciones previas
+  function resetContactAnimations() {
+    // Remover clases de animación existentes
+    document.querySelectorAll('.animate-element').forEach(element => {
+      element.classList.remove('in-view');
+    });
+    
+    // Desconectar observer anterior si existe
+    if (contactObserver) {
+      contactObserver.disconnect();
+    }
+  }
+
+  // Función para configurar animaciones
   function setupContactAnimation() {
-    const observer = new IntersectionObserver(handleIntersection, {
+    // Limpiar animaciones previas
+    resetContactAnimations();
+    
+    // Crear nuevo observer
+    contactObserver = new IntersectionObserver(handleIntersection, {
       threshold: 0.1,
       rootMargin: '0px 0px -10% 0px'
     });
 
+    // Observar elementos
     document.querySelectorAll('.animate-element').forEach(element => {
-      observer.observe(element);
+      if (contactObserver) {
+        contactObserver.observe(element);
+      }
     });
   }
 
+  // Función para inicializar la página
+  function initializeContactPage() {
+    // Pequeño delay para asegurar que el DOM esté completamente cargado
+    setTimeout(setupContactAnimation, 100);
+  }
+
+  // Función para limpiar al salir de la página
+  function cleanupContactPage() {
+    if (contactObserver) {
+      contactObserver.disconnect();
+      contactObserver = null;
+    }
+  }
+
   // Inicializar cuando el DOM está listo
-  document.addEventListener('DOMContentLoaded', setupContactAnimation);
+  document.addEventListener('DOMContentLoaded', initializeContactPage);
   
   // Re-inicializar en eventos de Astro
-  document.addEventListener('astro:page-load', setupContactAnimation);
+  document.addEventListener('astro:page-load', initializeContactPage);
+  
+  // Limpiar antes de las transiciones
+  document.addEventListener('astro:before-preparation', cleanupContactPage);
 </script>

@@ -486,6 +486,8 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
+  let servicesObserver: IntersectionObserver | null = null;
+
   // Función para inicializar la animación cuando el elemento es visible
   function handleIntersection(entries: IntersectionObserverEntry[]) {
     entries.forEach(entry => {
@@ -495,21 +497,58 @@ import Layout from '../layouts/Layout.astro';
     });
   }
 
+  // Función para limpiar animaciones previas
+  function resetAnimations() {
+    // Remover clases de animación existentes
+    document.querySelectorAll('.service-card, .process-step, .analysis-card').forEach(element => {
+      element.classList.remove('in-view');
+    });
+    
+    // Desconectar observer anterior si existe
+    if (servicesObserver) {
+      servicesObserver.disconnect();
+    }
+  }
+
   // Función para configurar el observador
   function setupServicesAnimation() {
-    const observer = new IntersectionObserver(handleIntersection, {
+    // Limpiar animaciones previas
+    resetAnimations();
+    
+    // Crear nuevo observer
+    servicesObserver = new IntersectionObserver(handleIntersection, {
       threshold: 0.1,
       rootMargin: '0px 0px -20% 0px'
     });
 
     // Observar todos los elementos animados
     document.querySelectorAll('.service-card, .process-step, .analysis-card').forEach(element => {
-      observer.observe(element);
+      if (servicesObserver) {
+        servicesObserver.observe(element);
+      }
     });
   }
 
+  // Función para inicializar la página
+  function initializeServicesPage() {
+    // Pequeño delay para asegurar que el DOM esté completamente cargado
+    setTimeout(setupServicesAnimation, 100);
+  }
+
+  // Limpiar al salir de la página
+  function cleanupServicesPage() {
+    if (servicesObserver) {
+      servicesObserver.disconnect();
+      servicesObserver = null;
+    }
+  }
+
   // Inicializar cuando el DOM esté listo
-  document.addEventListener('DOMContentLoaded', setupServicesAnimation);
+  document.addEventListener('DOMContentLoaded', initializeServicesPage);
+  
   // Reinicializar después de las transiciones de página de Astro
-  document.addEventListener('astro:page-load', setupServicesAnimation);
+  document.addEventListener('astro:page-load', initializeServicesPage);
+  
+  // Limpiar antes de las transiciones
+  document.addEventListener('astro:before-preparation', cleanupServicesPage);
 </script>
