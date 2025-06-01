@@ -308,6 +308,21 @@ import Layout from '../layouts/Layout.astro';
 <script>
   let contactObserver: IntersectionObserver | null = null;
 
+  // Declaraciones TypeScript para funciones del window
+  declare global {
+    interface Window {
+      isMobile?: () => boolean;
+      isIOS?: () => boolean;
+      getMobileDelay?: () => number;
+      iOSFixes?: {
+        isInBackground: boolean;
+        activeObservers: Array<{observer: IntersectionObserver, pageName: string}>;
+        registerObserver: (observer: IntersectionObserver, pageName: string) => void;
+        cleanup: () => void;
+      };
+    }
+  }
+
   // Función para manejar intersección
   function handleIntersection(entries: IntersectionObserverEntry[]) {
     entries.forEach(entry => {
@@ -335,11 +350,24 @@ import Layout from '../layouts/Layout.astro';
     // Limpiar animaciones previas
     resetContactAnimations();
     
+    // Configuración específica para móviles e iOS
+    const isMobileDevice = window.isMobile ? window.isMobile() : false;
+    const isIOSDevice = window.isIOS ? window.isIOS() : false;
+    
+    const observerConfig = {
+      threshold: isMobileDevice ? (isIOSDevice ? 0.02 : 0.05) : 0.1,
+      rootMargin: isMobileDevice ? 
+        (isIOSDevice ? '50px 0px 50px 0px' : '0px 0px -5% 0px') : 
+        '0px 0px -10% 0px'
+    };
+    
     // Crear nuevo observer
-    contactObserver = new IntersectionObserver(handleIntersection, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -10% 0px'
-    });
+    contactObserver = new IntersectionObserver(handleIntersection, observerConfig);
+
+    // Registrar en iOS system si está disponible
+    if (isIOSDevice && window.iOSFixes) {
+      window.iOSFixes.registerObserver(contactObserver, 'contact');
+    }
 
     // Observar elementos
     document.querySelectorAll('.animate-element').forEach(element => {
@@ -351,8 +379,9 @@ import Layout from '../layouts/Layout.astro';
 
   // Función para inicializar la página
   function initializeContactPage() {
-    // Pequeño delay para asegurar que el DOM esté completamente cargado
-    setTimeout(setupContactAnimation, 100);
+    // Delay específico para el tipo de dispositivo
+    const delay = window.getMobileDelay ? window.getMobileDelay() : 100;
+    setTimeout(setupContactAnimation, delay);
   }
 
   // Función para limpiar al salir de la página
@@ -363,12 +392,74 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
+  // Función de inicialización robusta para móviles
+  function robustContactInit() {
+    if (window.isMobile && window.isMobile()) {
+      let attempts = 0;
+      const maxAttempts = 3;
+      
+      function tryInit() {
+        attempts++;
+        if (document.readyState === 'complete') {
+          initializeContactPage();
+        } else if (attempts < maxAttempts) {
+          setTimeout(tryInit, 50);
+        } else {
+          initializeContactPage();
+        }
+      }
+      
+      tryInit();
+    } else {
+      initializeContactPage();
+    }
+  }
+
+  // Handlers específicos para iOS
+  function handleiOSPause() {
+    if (contactObserver) {
+      contactObserver.disconnect();
+    }
+  }
+
+  function handleiOSReactivate() {
+    setTimeout(setupContactAnimation, 200);
+  }
+
+  function handleiOSScrollEnd() {
+    if (contactObserver && window.isIOS && window.isIOS()) {
+      document.querySelectorAll('.animate-element').forEach(element => {
+        if (!element.classList.contains('in-view')) {
+          const rect = element.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          if (rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2) {
+            element.classList.add('in-view');
+          }
+        }
+      });
+    }
+  }
+
   // Inicializar cuando el DOM está listo
-  document.addEventListener('DOMContentLoaded', initializeContactPage);
+  document.addEventListener('DOMContentLoaded', robustContactInit);
   
   // Re-inicializar en eventos de Astro
-  document.addEventListener('astro:page-load', initializeContactPage);
+  document.addEventListener('astro:page-load', robustContactInit);
   
   // Limpiar antes de las transiciones
   document.addEventListener('astro:before-preparation', cleanupContactPage);
+  
+  // Para dispositivos móviles - listener adicional
+  if (window.isMobile && window.isMobile()) {
+    window.addEventListener('load', () => {
+      setTimeout(robustContactInit, window.getMobileDelay ? window.getMobileDelay() : 150);
+    });
+  }
+
+  // Listeners específicos para iOS
+  if (window.isIOS && window.isIOS()) {
+    window.addEventListener('ios-pause-observers', handleiOSPause);
+    window.addEventListener('ios-reactivate-observers', handleiOSReactivate);
+    window.addEventListener('ios-scroll-end', handleiOSScrollEnd);
+  }
 </script>

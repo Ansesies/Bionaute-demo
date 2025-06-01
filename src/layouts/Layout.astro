@@ -53,163 +53,92 @@ import { ClientRouter } from "astro:transitions";
 		
 		<!-- Sistema de traducciones global -->
 		<script is:inline>
-			// Sistema de traducciones global integrado
-			window.translations = {
-				// Header y navegación
-				nav: {
-					home: { es: "Inicio", en: "Home" },
-					about: { es: "Nosotros", en: "About" },
-					services: { es: "Servicios", en: "Services" },
-					news: { es: "Noticias", en: "News" },
-					contact: { es: "Contacto", en: "Contact" },
-					language: { es: "Idioma", en: "Language" }
-				},
+			// Detección móvil mejorada
+			window.isMobile = () => {
+				return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+					   window.innerWidth <= 768 ||
+					   (window.DeviceMotionEvent !== undefined);
+			};
+			
+			// Función para detectar si es iOS específicamente
+			window.isIOS = () => {
+				return /iPad|iPhone|iPod/.test(navigator.userAgent);
+			};
+			
+			// Configuración global para timeouts móviles
+			window.getMobileDelay = () => {
+				if (window.isIOS()) return 150; // iOS necesita más tiempo
+				if (window.isMobile()) return 100;
+				return 50; // Desktop
+			};
+			
+			// Sistema específico para iOS Safari
+			window.iOSFixes = {
+				// Flag para detectar si estamos en background
+				isInBackground: false,
 				
-				// Página About
-				about: {
-					title: { es: "Acerca de Bionaute", en: "About Bionaute" },
-					subtitle: { es: "Pioneros en biotecnología avanzada para una agricultura sostenible y eficiente.", en: "Pioneers in advanced biotechnology for sustainable and efficient agriculture." },
-					mission: { 
-						title: { es: "Nuestra Misión", en: "Our Mission" },
-						text1: { es: "Desarrollar soluciones biotecnológicas innovadoras que mejoren la productividad agrícola mientras protegen el medio ambiente.", en: "Develop innovative biotechnological solutions that improve agricultural productivity while protecting the environment." },
-						text2: { es: "Trabajamos comprometidos con la sostenibilidad y la eficiencia en cada uno de nuestros productos.", en: "We work committed to sustainability and efficiency in each of our products." }
-					},
-					vision: {
-						title: { es: "Nuestra Visión", en: "Our Vision" },
-						text1: { es: "Ser líderes mundiales en biotecnología agrícola, transformando la industria hacia prácticas más sostenibles.", en: "Be world leaders in agricultural biotechnology, transforming the industry towards more sustainable practices." },
-						text2: { es: "Construir un futuro donde la tecnología y la naturaleza trabajen en perfecta armonía.", en: "Build a future where technology and nature work in perfect harmony." }
-					},
-					values: {
-						title: { es: "Nuestros Valores", en: "Our Values" },
-						innovation: {
-							title: { es: "Innovación", en: "Innovation" },
-							text: { es: "Desarrollo constante de tecnologías que revolucionen la agricultura.", en: "Constant development of technologies that revolutionize agriculture." }
-						},
-						sustainability: {
-							title: { es: "Sostenibilidad", en: "Sustainability" },
-							text: { es: "Compromiso con el cuidado del medio ambiente en todos nuestros procesos.", en: "Commitment to environmental care in all our processes." }
-						},
-						excellence: {
-							title: { es: "Excelencia", en: "Excellence" },
-							text: { es: "Estándares de calidad superior en cada producto que desarrollamos.", en: "Superior quality standards in every product we develop." }
-						}
-					},
-					team: {
-						title: { es: "Nuestro Equipo", en: "Our Team" },
-						subtitle: { es: "Profesionales especializados en biotecnología y agricultura", en: "Professionals specialized in biotechnology and agriculture" }
+				// Array para guardar observers activos
+				activeObservers: [],
+				
+				// Función para manejar visibility changes (específico iOS)
+				handleVisibilityChange: function() {
+					if (document.hidden) {
+						window.iOSFixes.isInBackground = true;
+						// En iOS, cuando la página va a background, pausamos observers
+						window.iOSFixes.pauseObservers();
+					} else {
+						window.iOSFixes.isInBackground = false;
+						// Cuando vuelve a foreground, los reactivamos
+						setTimeout(() => {
+							window.iOSFixes.reactivateObservers();
+						}, 100);
 					}
 				},
 				
-				// Página Services
-				services: {
-					title: { es: "Nuestros Servicios", en: "Our Services" },
-					subtitle: { es: "Soluciones biotecnológicas integrales para el sector agrícola", en: "Comprehensive biotechnological solutions for the agricultural sector" },
-					consultation: {
-						title: { es: "Consultoría Especializada", en: "Specialized Consulting" },
-						text: { es: "Asesoramiento experto en implementación de tecnologías biotecnológicas", en: "Expert advice on implementing biotechnological technologies" }
-					},
-					development: {
-						title: { es: "Desarrollo de Productos", en: "Product Development" },
-						text: { es: "Creación de soluciones personalizadas para necesidades específicas", en: "Creation of customized solutions for specific needs" }
-					},
-					analysis: {
-						title: { es: "Análisis de Laboratorio", en: "Laboratory Analysis" },
-						text: { es: "Estudios especializados para optimizar procesos agrícolas", en: "Specialized studies to optimize agricultural processes" }
-					}
+				// Pausar observers (para iOS background)
+				pauseObservers: function() {
+					// Notificar a todas las páginas que pausa observers
+					window.dispatchEvent(new CustomEvent('ios-pause-observers'));
 				},
 				
-				// Página Contact
-				contact: {
-					title: { es: "Contacto", en: "Contact" },
-					subtitle: { es: "Conectemos para transformar la agricultura juntos", en: "Let's connect to transform agriculture together" },
-					info: {
-						title: { es: "Información de Contacto", en: "Contact Information" },
-						address: { es: "Dirección", en: "Address" },
-						phone: { es: "Teléfono", en: "Phone" },
-						email: { es: "Correo Electrónico", en: "Email" }
-					},
-					form: {
-						title: { es: "Envíanos un Mensaje", en: "Send us a Message" },
-						name: { es: "Nombre", en: "Name" },
-						company: { es: "Empresa", en: "Company" },
-						phone: { es: "Teléfono", en: "Phone" },
-						email: { es: "Correo Electrónico", en: "Email" },
-						subject: { es: "Asunto", en: "Subject" },
-						message: { es: "Mensaje", en: "Message" },
-						privacy: { es: "Acepto la política de privacidad", en: "I accept the privacy policy" },
-						send: { es: "Enviar Mensaje", en: "Send Message" }
-					}
+				// Reactivar observers (cuando iOS vuelve a foreground)
+				reactivateObservers: function() {
+					// Notificar a todas las páginas que reactive observers
+					window.dispatchEvent(new CustomEvent('ios-reactivate-observers'));
 				},
 				
-				// Página News
-				news: {
-					title: { es: "Noticias", en: "News" },
-					subtitle: { es: "Mantente al día con las últimas innovaciones en biotecnología", en: "Stay up to date with the latest innovations in biotechnology" },
-					categories: {
-						all: { es: "Todas", en: "All" },
-						research: { es: "Investigación", en: "Research" },
-						products: { es: "Productos", en: "Products" },
-						events: { es: "Eventos", en: "Events" },
-						sustainability: { es: "Sostenibilidad", en: "Sustainability" }
-					},
-					featured: { es: "Artículo Destacado", en: "Featured Article" },
-					readMore: { es: "Leer más", en: "Read more" },
-					newsletter: {
-						title: { es: "Suscríbete a Nuestro Newsletter", en: "Subscribe to Our Newsletter" },
-						subtitle: { es: "Recibe las últimas noticias y actualizaciones directamente en tu correo", en: "Get the latest news and updates directly in your email" },
-						email: { es: "Tu correo electrónico", en: "Your email address" },
-						subscribe: { es: "Suscribirse", en: "Subscribe" }
-					}
+				// Registrar un observer para manejo iOS
+				registerObserver: function(observer, pageName) {
+					this.activeObservers.push({ observer, pageName });
 				},
 				
-				// Página Home
-				home: {
-					hero: {
-						title: { es: "Biotecnología para un Futuro Sostenible", en: "Biotechnology for a Sustainable Future" },
-						subtitle: { es: "Innovaciones que transforman la agricultura moderna", en: "Innovations that transform modern agriculture" }
-					},
-					company: {
-						title: { es: "Bionaute: Innovación en Biotecnología Agrícola", en: "Bionaute: Innovation in Agricultural Biotechnology" },
-						description: { es: "En Bionaute, desarrollamos soluciones biotecnológicas avanzadas que revolucionan la agricultura moderna. Nuestros productos y servicios están diseñados para optimizar la productividad agrícola mientras protegemos el medio ambiente.", en: "At Bionaute, we develop advanced biotechnological solutions that revolutionize modern agriculture. Our products and services are designed to optimize agricultural productivity while protecting the environment." }
-					},
-					values: {
-						title: { es: "Nuestros Pilares", en: "Our Pillars" },
-						excellence: {
-							title: { es: "Excelencia Científica", en: "Scientific Excellence" },
-							text: { es: "Investigación de vanguardia respaldada por los más altos estándares científicos", en: "Cutting-edge research backed by the highest scientific standards" }
-						},
-						commitment: {
-							title: { es: "Compromiso Ambiental", en: "Environmental Commitment" },
-							text: { es: "Desarrollo sostenible que protege y preserva nuestro ecosistema", en: "Sustainable development that protects and preserves our ecosystem" }
-						},
-						innovation: {
-							title: { es: "Innovación Continua", en: "Continuous Innovation" },
-							text: { es: "Búsqueda constante de soluciones que transformen la agricultura", en: "Constant search for solutions that transform agriculture" }
-						}
-					},
-					mission: {
-						title: { es: "Nuestra Misión", en: "Our Mission" },
-						text: { es: "Desarrollar tecnologías biotecnológicas que mejoren la eficiencia agrícola y contribuyan a un futuro más sostenible para las próximas generaciones.", en: "Develop biotechnological technologies that improve agricultural efficiency and contribute to a more sustainable future for the next generations." }
-					},
-					vision: {
-						title: { es: "Nuestra Visión", en: "Our Vision" },
-						text: { es: "Ser reconocidos como líderes mundiales en biotecnología agrícola, estableciendo nuevos estándares de innovación y sostenibilidad en la industria.", en: "Be recognized as world leaders in agricultural biotechnology, setting new standards of innovation and sustainability in the industry." }
-					},
-					cta: {
-						services: { es: "Conocer Servicios", en: "Learn About Services" },
-						contact: { es: "Contactar", en: "Contact Us" }
-					}
-				},
-				
-				// Footer
-				footer: {
-					description: { es: "Innovación biotecnológica para una agricultura sostenible", en: "Biotechnological innovation for sustainable agriculture" },
-					quickLinks: { es: "Enlaces Rápidos", en: "Quick Links" },
-					contact: { es: "Contacto", en: "Contact" },
-					followUs: { es: "Síguenos", en: "Follow Us" },
-					rights: { es: "Todos los derechos reservados.", en: "All rights reserved." }
+				// Cleanup de observers
+				cleanup: function() {
+					this.activeObservers = [];
 				}
 			};
+			
+			// Setup específico para iOS
+			if (window.isIOS()) {
+				document.addEventListener('visibilitychange', window.iOSFixes.handleVisibilityChange);
+				
+				// iOS Safari específico - manejar scroll momentum
+				document.addEventListener('touchstart', function() {
+					// Marcar que hay scroll touch activo
+					document.body.style.setProperty('--ios-touch-active', '1');
+				});
+				
+				document.addEventListener('touchend', function() {
+					// Pequeño delay antes de reactivar observers después del scroll
+					setTimeout(() => {
+						document.body.style.removeProperty('--ios-touch-active');
+						// Trigger manual de intersection observers
+						window.dispatchEvent(new CustomEvent('ios-scroll-end'));
+					}, 300);
+				});
+			}
+			
+			// Sistema de traducciones global integrado
 			
 			// Función para obtener traducción
 			window.getTranslation = function(path, lang = 'es') {

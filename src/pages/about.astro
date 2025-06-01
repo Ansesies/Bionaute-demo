@@ -368,13 +368,40 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
+  // Declaraciones de tipos para funciones de detección móvil
+  declare global {
+    interface Window {
+      isMobile?: () => boolean;
+      isIOS?: () => boolean;
+      getMobileDelay?: () => number;
+      iOSFixes?: {
+        isInBackground: boolean;
+        activeObservers: Array<{observer: IntersectionObserver, pageName: string}>;
+        registerObserver: (observer: IntersectionObserver, pageName: string) => void;
+        cleanup: () => void;
+      };
+    }
+  }
+
   let aboutObserver: IntersectionObserver | null = null;
+
+  // Detectar si estamos en un dispositivo móvil específicamente iOS
+  const isMobileDevice = window.isMobile ? window.isMobile() : false;
+  const isIOSDevice = window.isIOS ? window.isIOS() : false;
+  const mobileDelay = window.getMobileDelay ? window.getMobileDelay() : 100;
 
   // Función para inicializar la animación cuando el elemento es visible
   function handleIntersection(entries: IntersectionObserverEntry[]) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
+        // En iOS, agregar un pequeño delay adicional para asegurar estabilidad
+        if (isIOSDevice) {
+          setTimeout(() => {
+            entry.target.classList.add('in-view');
+          }, 50);
+        } else {
+          entry.target.classList.add('in-view');
+        }
       }
     });
   }
@@ -392,16 +419,26 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  // Función para configurar el observador
+  // Función para configurar el observador con configuración específica para móviles/iOS
   function setupCardsAnimation() {
     // Limpiar animaciones previas
     resetAboutAnimations();
     
-    // Crear nuevo observer
-    aboutObserver = new IntersectionObserver(handleIntersection, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -20% 0px'
-    });
+    // Configuración específica para diferentes dispositivos
+    const observerConfig = {
+      threshold: isMobileDevice ? (isIOSDevice ? 0.02 : 0.05) : 0.1, // Umbral muy bajo para iOS
+      rootMargin: isMobileDevice ? 
+        (isIOSDevice ? '50px 0px 50px 0px' : '0px 0px -10% 0px') : 
+        '0px 0px -20% 0px' // Márgenes más amplios para iOS
+    };
+    
+    // Crear nuevo observer con configuración específica
+    aboutObserver = new IntersectionObserver(handleIntersection, observerConfig);
+
+    // Registrar el observer con el sistema iOS si está disponible
+    if (isIOSDevice && window.iOSFixes) {
+      window.iOSFixes.registerObserver(aboutObserver, 'about');
+    }
 
     // Observar todas las tarjetas de valores, equipo e historia
     document.querySelectorAll('.value-card, .team-card, .history-card').forEach(card => {
@@ -411,25 +448,80 @@ import Layout from '../layouts/Layout.astro';
     });
   }
 
+  // Función para manejar pausa de observers (específico iOS)
+  function handleiOSPause() {
+    if (aboutObserver) {
+      aboutObserver.disconnect();
+    }
+  }
+
+  // Función para reactivar observers después de pausa iOS
+  function handleiOSReactivate() {
+    // Reactivar con delay específico para iOS
+    setTimeout(() => {
+      setupCardsAnimation();
+    }, mobileDelay);
+  }
+
+  // Función para manejar final de scroll en iOS (momentum scrolling)
+  function handleiOSScrollEnd() {
+    if (isIOSDevice && aboutObserver) {
+      // Trigger manual de intersections para elementos visibles
+      document.querySelectorAll('.value-card, .team-card, .history-card').forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isVisible && !card.classList.contains('in-view')) {
+          card.classList.add('in-view');
+        }
+      });
+    }
+  }
+
   // Función para inicializar la página
   function initializeAboutPage() {
-    // Pequeño delay para asegurar que el DOM esté completamente cargado
-    setTimeout(setupCardsAnimation, 100);
+    // Delay específico para cada tipo de dispositivo
+    setTimeout(setupCardsAnimation, mobileDelay);
   }
 
   // Función para limpiar al salir de la página
   function cleanupAboutPage() {
+    // Remover event listeners específicos de iOS
+    window.removeEventListener('ios-pause-observers', handleiOSPause);
+    window.removeEventListener('ios-reactivate-observers', handleiOSReactivate);
+    window.removeEventListener('ios-scroll-end', handleiOSScrollEnd);
+    
     if (aboutObserver) {
       aboutObserver.disconnect();
       aboutObserver = null;
     }
+    
+    // Limpiar registro en el sistema iOS
+    if (window.iOSFixes) {
+      window.iOSFixes.cleanup();
+    }
+  }
+
+  // Configurar event listeners específicos para iOS
+  function setupiOSEventListeners() {
+    if (isIOSDevice) {
+      window.addEventListener('ios-pause-observers', handleiOSPause);
+      window.addEventListener('ios-reactivate-observers', handleiOSReactivate);
+      window.addEventListener('ios-scroll-end', handleiOSScrollEnd);
+    }
   }
 
   // Inicializar cuando el DOM esté listo
-  document.addEventListener('DOMContentLoaded', initializeAboutPage);
+  document.addEventListener('DOMContentLoaded', () => {
+    setupiOSEventListeners();
+    initializeAboutPage();
+  });
   
   // Reinicializar después de las transiciones de página de Astro
-  document.addEventListener('astro:page-load', initializeAboutPage);
+  document.addEventListener('astro:page-load', () => {
+    setupiOSEventListeners();
+    initializeAboutPage();
+  });
   
   // Limpiar antes de las transiciones
   document.addEventListener('astro:before-preparation', cleanupAboutPage);
