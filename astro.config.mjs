@@ -5,6 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://Ansesies.github.io',
+  base: '/Bionaute-demo',
   vite: {
     plugins: [tailwindcss()]
   }
