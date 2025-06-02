@@ -1,228 +1,23 @@
 ---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
 import "../styles/global.css";
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { ClientRouter } from "astro:transitions";
 ---
 
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<!-- Script que se ejecuta inmediatamente para marcar que JS está habilitado -->
-		<script is:inline>
-			// Marcar que JS está habilitado - esto permite que las CSS apliquen animaciones condicionales
-			document.documentElement.classList.add('js-enabled');
-		</script>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Bionaute - Biotecnología Avanzada</title>
-		<!-- Animación específica para Astro View Transitions -->
-		<style is:inline>
-			/* Optimización específica para transiciones de Astro */
-			:root {
-				--footer-transition-duration: 1s;
-				--footer-transition-timing: cubic-bezier(0.215, 0.61, 0.355, 1);
-			}
-
-			html[data-astro-transition] footer#footer {
-				opacity: 1 !important;
-				visibility: visible !important;
-			}
-			
-			/* Solucionador para el parpadeo durante transiciones */
-			html[data-astro-transition-fallback] footer#footer .footer-item,
-			html[data-astro-transition-fallback] footer#footer .footer-divider,
-			html[data-astro-transition-fallback] footer#footer .footer-bottom {
-				opacity: 1 !important;
-				transform: translateY(0) !important;
-			}
-		</style>
-		<script is:inline src="/ts/header.ts" defer></script>
-		
-		<ClientRouter />
+		<title>Astro Basics</title>
 	</head>
 	<body>
 		<Header />
-		<main>
-			<slot />
-		</main>
-		<Footer />
-		
-		<!-- Sistema de traducciones global -->
-		<script is:inline>
-			// Detección móvil mejorada
-			window.isMobile = () => {
-				return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-					   window.innerWidth <= 768 ||
-					   (window.DeviceMotionEvent !== undefined);
-			};
-			
-			// Función para detectar si es iOS específicamente
-			window.isIOS = () => {
-				return /iPad|iPhone|iPod/.test(navigator.userAgent);
-			};
-			
-			// Configuración global para timeouts móviles
-			window.getMobileDelay = () => {
-				if (window.isIOS()) return 150; // iOS necesita más tiempo
-				if (window.isMobile()) return 100;
-				return 50; // Desktop
-			};
-			
-			// Sistema específico para iOS Safari
-			window.iOSFixes = {
-				// Flag para detectar si estamos en background
-				isInBackground: false,
-				
-				// Array para guardar observers activos
-				activeObservers: [],
-				
-				// Función para manejar visibility changes (específico iOS)
-				handleVisibilityChange: function() {
-					if (document.hidden) {
-						window.iOSFixes.isInBackground = true;
-						// En iOS, cuando la página va a background, pausamos observers
-						window.iOSFixes.pauseObservers();
-					} else {
-						window.iOSFixes.isInBackground = false;
-						// Cuando vuelve a foreground, los reactivamos
-						setTimeout(() => {
-							window.iOSFixes.reactivateObservers();
-						}, 100);
-					}
-				},
-				
-				// Pausar observers (para iOS background)
-				pauseObservers: function() {
-					// Notificar a todas las páginas que pausa observers
-					window.dispatchEvent(new CustomEvent('ios-pause-observers'));
-				},
-				
-				// Reactivar observers (cuando iOS vuelve a foreground)
-				reactivateObservers: function() {
-					// Notificar a todas las páginas que reactive observers
-					window.dispatchEvent(new CustomEvent('ios-reactivate-observers'));
-				},
-				
-				// Registrar un observer para manejo iOS
-				registerObserver: function(observer, pageName) {
-					this.activeObservers.push({ observer, pageName });
-				},
-				
-				// Cleanup de observers
-				cleanup: function() {
-					this.activeObservers = [];
-				}
-			};
-			
-			// Setup específico para iOS
-			if (window.isIOS()) {
-				document.addEventListener('visibilitychange', window.iOSFixes.handleVisibilityChange);
-				
-				// iOS Safari específico - manejar scroll momentum
-				document.addEventListener('touchstart', function() {
-					// Marcar que hay scroll touch activo
-					document.body.style.setProperty('--ios-touch-active', '1');
-				});
-				
-				document.addEventListener('touchend', function() {
-					// Pequeño delay antes de reactivar observers después del scroll
-					setTimeout(() => {
-						document.body.style.removeProperty('--ios-touch-active');
-						// Trigger manual de intersection observers
-						window.dispatchEvent(new CustomEvent('ios-scroll-end'));
-					}, 300);
-				});
-			}
-			
-			// Sistema de traducciones global integrado
-			
-			// Función para obtener traducción
-			window.getTranslation = function(path, lang = 'es') {
-				const keys = path.split('.');
-				let current = window.translations;
-				
-				for (const key of keys) {
-					if (current[key]) {
-						current = current[key];
-					} else {
-						return path; // Retorna la clave si no encuentra traducción
-					}
-				}
-				
-				return current[lang] || current['es'] || path;
-			};
-			
-			// Función para aplicar traducciones a elementos con data-translate
-			window.applyTranslations = function(lang = 'es') {
-				const elements = document.querySelectorAll('[data-translate]');
-				
-				elements.forEach(element => {
-					const translationKey = element.getAttribute('data-translate');
-					if (translationKey) {
-						const translation = window.getTranslation(translationKey, lang);
-						element.textContent = translation;
-					}
-				});
-			};
-			
-			// Función para configurar el listener global
-			window.setupGlobalLanguageListener = function() {
-				window.addEventListener('languageChanged', (event) => {
-					const newLanguage = event.detail.language;
-					window.applyTranslations(newLanguage);
-				});
-			};
-			
-			// Función mejorada para inicializar traducciones con soporte móvil
-			function initializeTranslations() {
-				// Configurar el listener global para cambios de idioma
-				window.setupGlobalLanguageListener();
-				
-				// Aplicar idioma guardado o español por defecto
-				const savedLanguage = localStorage.getItem('bionaute-language') || 'es';
-				
-				// Pequeño delay para asegurar que el DOM esté completamente cargado en móviles
-				setTimeout(() => {
-					window.applyTranslations(savedLanguage);
-				}, 50);
-			}
-			
-			// Función para limpiar listeners anteriores (importante para móviles)
-			function cleanupPreviousListeners() {
-				// Remover listeners de idioma previos si existen
-				if (window.previousLanguageListener) {
-					window.removeEventListener('languageChanged', window.previousLanguageListener);
-				}
-			}
-			
-			// Función de inicialización mejorada
-			function robustInitialization() {
-				cleanupPreviousListeners();
-				initializeTranslations();
-			}
-			
-			// Múltiples puntos de inicialización para máxima compatibilidad
-			document.addEventListener('DOMContentLoaded', robustInitialization);
-			document.addEventListener('astro:page-load', robustInitialization);
-			
-			// Para navegadores móviles que pueden tener comportamientos específicos
-			window.addEventListener('load', () => {
-				setTimeout(robustInitialization, 100);
-			});
-			
-			// Limpieza antes de transiciones (importante para móviles)
-			document.addEventListener('astro:before-preparation', cleanupPreviousListeners);
-		</script>
-		
-		<!-- Script adicional para HeaderScript -->
-		<script>
-			// Solo marcar que JS está habilitado
-			document.documentElement.classList.add('js-enabled');
-		</script>
+		<slot />
+		<Footer/>
 	</body>
 </html>
 
@@ -230,25 +25,7 @@ import { ClientRouter } from "astro:transitions";
 	html,
 	body {
 		margin: 0;
-		padding: 0;
 		width: 100%;
 		height: 100%;
-		overflow-x: hidden;
-	}
-
-	main {
-		display: block;
-		padding: 0;
-		margin: 0;
-	}
-	
-	/* Solo estilos básicos de layout */
-	.footer-item, .footer-divider, .footer-bottom {
-		will-change: opacity, transform;
-	}
-	
-	/* Transiciones de página */
-	html[data-astro-transition] footer#footer {
-		opacity: 1;
 	}
 </style>

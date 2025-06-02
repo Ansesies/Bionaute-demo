@@ -457,34 +457,14 @@ import Layout from '../layouts/Layout.astro';
 <script>
   let newsObserver: IntersectionObserver | null = null;
 
-  // Declaraciones TypeScript para funciones del window
-  declare global {
-    interface Window {
-      isMobile?: () => boolean;
-      isIOS?: () => boolean;
-      getMobileDelay?: () => number;
-      iOSFixes?: {
-        isInBackground: boolean;
-        activeObservers: Array<{observer: IntersectionObserver, pageName: string}>;
-        registerObserver: (observer: IntersectionObserver, pageName: string) => void;
-        cleanup: () => void;
-      };
-    }
-  }
-
   function initNewsAnimations() {
     // Limpiar animaciones previas
     resetNewsAnimations();
     
-    // Configuración específica para móviles e iOS
-    const isMobileDevice = window.isMobile ? window.isMobile() : false;
-    const isIOSDevice = window.isIOS ? window.isIOS() : false;
-    
+    // Configuración simple y compatible
     const observerOptions = {
-      threshold: isMobileDevice ? (isIOSDevice ? 0.02 : 0.05) : 0.1,
-      rootMargin: isMobileDevice ? 
-        (isIOSDevice ? '50px 0px 50px 0px' : '0px 0px -25px 0px') : 
-        '0px 0px -50px 0px'
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
     };
 
     newsObserver = new IntersectionObserver((entries) => {
@@ -502,11 +482,6 @@ import Layout from '../layouts/Layout.astro';
         }
       });
     }, observerOptions);
-
-    // Registrar en iOS system si está disponible
-    if (isIOSDevice && window.iOSFixes) {
-      window.iOSFixes.registerObserver(newsObserver, 'news');
-    }
 
     // Observar todos los elementos animables
     const animatedElements = document.querySelectorAll(
