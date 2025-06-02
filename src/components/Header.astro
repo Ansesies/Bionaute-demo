@@ -39,24 +39,51 @@
     </div>
     
     <!-- Menú móvil (oculto por defecto) -->
-    <div id="mobile-menu" class="md:hidden hidden mt-2 rounded-md bg-gradient-to-r from-emerald-800/90 to-teal-800/90 backdrop-blur-lg shadow-lg transform transition-all duration-300 origin-top scale-y-0 opacity-0">
+    <div id="mobile-menu" class="md:hidden hidden mt-2 rounded-md bg-gradient-to-r from-emerald-800/95 to-teal-800/95 backdrop-blur-lg shadow-xl border border-emerald-600/20 transform transition-all duration-300 origin-top scale-y-0 opacity-0">
       <div class="px-2 pt-2 pb-3 space-y-1">
-        <a href="/" class="block px-3 py-2 rounded-md text-white hover:bg-emerald-700 transition-colors duration-300 font-medium">Home</a>
-        <a href="/about" class="block px-3 py-2 rounded-md text-white hover:bg-emerald-700 transition-colors duration-300 font-medium">About</a>
-        <a href="/services" class="block px-3 py-2 rounded-md text-white hover:bg-emerald-700 transition-colors duration-300 font-medium">Services</a>
-        <a href="/news" class="block px-3 py-2 rounded-md text-white hover:bg-emerald-700 transition-colors duration-300 font-medium">News</a>
-        <a href="/contact" class="block px-3 py-2 rounded-md text-white hover:bg-emerald-700 transition-colors duration-300 font-medium">Contact</a>
+        <a href="/" class="block px-3 py-2 rounded-md text-white hover:bg-emerald-700/80 transition-colors duration-300 font-medium">Home</a>
+        <a href="/about" class="block px-3 py-2 rounded-md text-white hover:bg-emerald-700/80 transition-colors duration-300 font-medium">About</a>
+        <a href="/services" class="block px-3 py-2 rounded-md text-white hover:bg-emerald-700/80 transition-colors duration-300 font-medium">Services</a>
+        <a href="/news" class="block px-3 py-2 rounded-md text-white hover:bg-emerald-700/80 transition-colors duration-300 font-medium">News</a>
+        <a href="/contact" class="block px-3 py-2 rounded-md text-white hover:bg-emerald-700/80 transition-colors duration-300 font-medium">Contact</a>
       </div>
     </div>
   </div>
 </header>
 
 <style>
-  /* Animaciones adicionales para los elementos del header */
+  /* Header styles */
   header {
     background: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.6) 100%);
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
   
+  /* Container responsive */
+  header .container {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  @media (max-width: 375px) {
+    header .container {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+  }
+  
+  /* Menú móvil mejoras */
+  #mobile-menu {
+    width: 100%;
+    max-width: 100%;
+    left: 0;
+    right: 0;
+  }
+  
+  /* Animaciones */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -81,6 +108,21 @@
   .nav-link:hover::after {
     width: 100%;
   }
+  
+  /* Botón hamburguesa mejorado */
+  #mobile-menu-button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Mejoras para la transición del menú móvil */
+  #mobile-menu.scale-y-100 {
+    transform: scaleY(1);
+  }
+  
+  #mobile-menu.opacity-100 {
+    opacity: 1;
+  }
 </style>
 
 <!-- Script para la funcionalidad del header -->
@@ -104,15 +146,47 @@
     const mobileMenu = document.getElementById('mobile-menu');
     
     if (menuButton && mobileMenu) {
-      menuButton.addEventListener('click', () => {
-        // Toggle para mostrar/ocultar menú
-        if (mobileMenu.classList.contains('hidden')) {
+      // Limpiar eventos anteriores
+      const newButton = menuButton.cloneNode(true);
+      menuButton.parentNode?.replaceChild(newButton, menuButton);
+      
+      newButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Toggle menú móvil');
+        
+        // Toggle del menú
+        const isHidden = mobileMenu.classList.contains('hidden');
+        
+        if (isHidden) {
+          // Mostrar menú
           mobileMenu.classList.remove('hidden');
-          mobileMenu.classList.remove('scale-y-0', 'opacity-0');
+          // Usar setTimeout para permitir que se renderice antes de la animación
+          setTimeout(() => {
+            mobileMenu.classList.remove('scale-y-0', 'opacity-0');
+            mobileMenu.classList.add('scale-y-100', 'opacity-100');
+          }, 10);
         } else {
-          mobileMenu.classList.add('hidden');
+          // Ocultar menú
+          mobileMenu.classList.remove('scale-y-100', 'opacity-100');
           mobileMenu.classList.add('scale-y-0', 'opacity-0');
+          // Esperar a que termine la animación antes de ocultar
+          setTimeout(() => {
+            mobileMenu.classList.add('hidden');
+          }, 300);
         }
+      });
+      
+      // Cerrar menú al hacer click en los enlaces
+      const menuLinks = mobileMenu.querySelectorAll('a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('scale-y-100', 'opacity-100');
+          mobileMenu.classList.add('scale-y-0', 'opacity-0');
+          setTimeout(() => {
+            mobileMenu.classList.add('hidden');
+          }, 300);
+        });
       });
     }
   }

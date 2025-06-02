@@ -9,7 +9,7 @@ import "../styles/global.css";
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
@@ -25,7 +25,23 @@ import "../styles/global.css";
 	html,
 	body {
 		margin: 0;
+		padding: 0;
 		width: 100%;
 		height: 100%;
+		overflow-x: hidden;
+		max-width: 100vw;
+		box-sizing: border-box;
+	}
+	
+	*, 
+	*::before, 
+	*::after {
+		box-sizing: border-box;
+	}
+	
+	/* Prevenir que elementos se salgan del viewport */
+	.container {
+		width: 100%;
+		max-width: 100%;
 	}
 </style>
